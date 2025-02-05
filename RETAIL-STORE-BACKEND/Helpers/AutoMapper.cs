@@ -9,6 +9,10 @@ namespace RETAIL_STORE_BACKEND.Helpers
         public AutoMapper()
         {
             CreateMap<Product, ProductDto>();
+
+            CreateMap<Power, PowerDto>();
+
+            CreateMap<Colour, ColourDto>();
             
         }
     }

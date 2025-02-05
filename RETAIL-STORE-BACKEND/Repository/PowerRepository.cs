@@ -1,28 +1,40 @@
-﻿using RETAIL_STORE_BACKEND.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using RETAIL_STORE_BACKEND.Data;
+using RETAIL_STORE_BACKEND.Interfaces;
 using RETAIL_STORE_BACKEND.Models;
 
 namespace RETAIL_STORE_BACKEND.Repository
 {
-    public class PowerRepository : IPowerRepository
+    public class PowerRepository(AppDbContext _context) : IPowerRepository
     {
-        public Task<Power> AddPower(Power power)
+        public async Task<Power> AddPower(Power power)
         {
-            throw new NotImplementedException();
+            await _context.Powers.AddAsync(power);
+
+            await _context.SaveChangesAsync();
+
+            return power;
         }
 
-        public Task<ICollection<Power>> GetAllPowers()
+        public async Task<ICollection<Power>> GetAllPowers()
         {
-            throw new NotImplementedException();
+            var result = await _context.Powers.ToListAsync();
+
+            return result;
         }
 
-        public Task<Power> GetPowerById(int id)
+        public async Task<Power> GetPowerById(int id)
         {
-            throw new NotImplementedException();
+            var result = await _context.Powers.FindAsync(id);
+
+            return result;
         }
 
-        public Task<Power> GetPowerByRating(string name)
+        public async Task<Power> GetPowerByRating(string name)
         {
-            throw new NotImplementedException();
+            var result = await _context.Powers.FirstOrDefaultAsync(x => x.Rating == name);
+
+            return result;
         }
     }
 }

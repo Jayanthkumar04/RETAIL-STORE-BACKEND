@@ -1,28 +1,39 @@
-﻿using RETAIL_STORE_BACKEND.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using RETAIL_STORE_BACKEND.Data;
+using RETAIL_STORE_BACKEND.Interfaces;
 using RETAIL_STORE_BACKEND.Models;
 
 namespace RETAIL_STORE_BACKEND.Repository
 {
-    public class ColourRepository : IColourRepository
+    public class ColourRepository(AppDbContext _context) : IColourRepository
     {
-        public Task<Colour> AddColour(Colour colour)
+        public async Task<Colour> AddColour(Colour colour)
         {
-            throw new NotImplementedException();
+            var result = await _context.Colours.AddAsync(colour);
+
+            await _context.SaveChangesAsync();
+
+            return colour;
         }
 
-        public Task<ICollection<Colour>> GetAllColours()
+        public async Task<ICollection<Colour>> GetAllColours()
         {
-            throw new NotImplementedException();
+            var result = await _context.Colours.ToListAsync();
+
+            return result;
         }
 
-        public Task<Colour> GetColourById(int id)
+        public async Task<Colour> GetColourById(int id)
         {
-            throw new NotImplementedException();
+            var result = await _context.Colours.FindAsync(id);
+            return result;
         }
 
-        public Task<Colour> GetColourByName(string name)
+        public async Task<Colour> GetColourByName(string name)
         {
-            throw new NotImplementedException();
+            var result = await _context.Colours.FirstOrDefaultAsync(x => x.Shade == name);
+
+            return result;
         }
     }
 }

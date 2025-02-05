@@ -1,33 +1,59 @@
-﻿using RETAIL_STORE_BACKEND.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using RETAIL_STORE_BACKEND.Data;
+using RETAIL_STORE_BACKEND.Interfaces;
 using RETAIL_STORE_BACKEND.Models;
 
 namespace RETAIL_STORE_BACKEND.Repository
 {
-    public class ProductRepository : IProductRepository
+    public class ProductRepository(AppDbContext _context) : IProductRepository
     {
-        public Task<Product> AddProduct(Product product)
+        public async Task<Product> AddProduct(Product product)
         {
-            throw new NotImplementedException();
+
+            var result = await _context.Products.AddAsync(product);
+
+            await _context.SaveChangesAsync();
+
+            return product;
+
+
         }
 
-        public Task<ICollection<Product>> GetAllProducts()
+        //public async Task<Product> DeleteProduct(int id)
+        //{
+        //    var product = await _context.Products.FindAsync(id);
+
+        //    var result = await _context.Products.RemoveAsync(product);
+        //}
+
+        public async Task<ICollection<Product>> GetAllProducts()
         {
-            throw new NotImplementedException();
+
+            var result = await _context.Products.ToListAsync();
+
+            return result;
+        
         }
 
-        public Task<Product> GetProductById(int id)
+        public async Task<Product> GetProductById(int id)
         {
-            throw new NotImplementedException();
+            var result = await _context.Products.FirstOrDefaultAsync(x => x.Id == id);
+
+            return result;
         }
 
-        public Task<ICollection<Product>> GetProductsByBrand(string name)
+        public async Task<ICollection<Product>> GetProductsByBrand(string name)
         {
-            throw new NotImplementedException();
+            var result = await _context.Products.Where(x => x.Brand == name).ToListAsync();
+
+            return result;
         }
 
-        public Task<ICollection<Product>> GetProductsByCategory(string name)
+        public async Task<ICollection<Product>> GetProductsByCategory(string name)
         {
-            throw new NotImplementedException();
+            var result = await _context.Products.Where(x => x.Category == name).ToListAsync();
+
+            return result;
         }
     }
 }

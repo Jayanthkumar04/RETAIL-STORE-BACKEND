@@ -14,5 +14,7 @@ namespace RETAIL_STORE_BACKEND.Interfaces
         Task<ICollection<Product>> GetProductsByCategory(string name);
 
         Task<ICollection<Product>> GetProductsByBrand(string name);
+
+        Task<Product> DeleteProduct(int id);
     }
 }
