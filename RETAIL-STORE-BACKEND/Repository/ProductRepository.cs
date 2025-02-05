@@ -19,12 +19,13 @@ namespace RETAIL_STORE_BACKEND.Repository
 
         }
 
-        //public async Task<Product> DeleteProduct(int id)
-        //{
-        //    var product = await _context.Products.FindAsync(id);
+        public async Task<Product> DeleteProduct(int id)
+        {
+                var product = await _context.Products.FindAsync(id);
 
-        //    var result = await _context.Products.RemoveAsync(product);
-        //}
+            //    var result = await _context.Products.RemoveAsync(product);
+            return product;
+        }
 
         public async Task<ICollection<Product>> GetAllProducts()
         {
